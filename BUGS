@@ -1,0 +1,17 @@
+// File keeps track of bugs found in list.c
+// also reports how the bugs were fixed.
+
+
+-lines 24-31: list_insert2
+Segmentation fault since using ( . ) operator. The u and v nodes go out of scope
+once the program leaves insert2. Fixed by replacing u and v with pointers.
+( . ) became (->).
+
+-lines 37-46: list_remove
+Remove did not free the removed node. Created a pointer that points to the node
+after the removed node in order to free the removed node and 
+
+-lines 63-69: list_destroy
+Destroy was originally only freeing the head node. Added two new pointers to 
+point to current and the next node in order loop through the list and free nodes
+without receiving an invalid read errors.

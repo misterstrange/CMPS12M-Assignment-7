@@ -1,0 +1,7 @@
+Goal of the assignment was to correct all the bugs found in list.c
+
+This folder contains:
+README
+BUGS
+Makefile
+list.c

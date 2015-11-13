@@ -1,3 +1,6 @@
+/*A singly listed list in C. Originally had bugs. now fixed and runs
+ *cleanly.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,22 +24,28 @@ void list_insert(int v) {
 
 // Insert two values at once into linked list
 void list_insert2(int a, int b) {
-    struct node u, v;
-    u.value = a;
-    u.next = &v;
-    v.value = b;
-    v.next = head;
-    head = &u;
+    struct node *u, *v;
+    u = (struct node *)malloc(sizeof(struct node));
+    v = (struct node *)malloc(sizeof(struct node));
+    u->value = a;
+    u->next = v;
+    v->value = b;
+    v->next = head;
+    head = u;
+    
 }
 
 // Remove an element from linked list
 void list_remove(int v) {
     struct node *n = head;
+    struct node *h;
     while(n && n->next && n->next->value != v) {
         n = n->next;
     }
     if(n && n->next && n->next->value == v) {
-        n->next = n->next->next;
+        h = n->next->next;
+        free(n->next);
+        n->next = h;
     }
 }
 
@@ -55,7 +64,13 @@ void list_printall(void) {
 
 // Deallocate all memory used in linked list
 void list_destroy(void) {
-    free(head);
+    struct node *d = head;
+    struct node *e;
+    while(d){
+        e = d->next;
+        free(d);
+        d = e;
+    }
 }
 
 int main(int argc, char *argv[]) {
